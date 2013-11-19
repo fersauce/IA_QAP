@@ -1,0 +1,6 @@
+Cant_ciudades=75
+N_Objetivos=2
+N_Generaciones=300
+Porcen_Mutacion=5.0
+N_Poblacion=100
+N_ParetoSetExt=100
