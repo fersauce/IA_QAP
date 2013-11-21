@@ -14,26 +14,27 @@ import java.util.ArrayList;
 public class Cluster {
 
     /**
-     * Variable privada que representa a la solucion clusterizada
+     * Variable privada que representa a la solucionClusterizada
      */
-    private ArrayList<Solucion> solucion;
+    private ArrayList<Solucion> solucionClusterizada;
 
     /**
-     * Seter para solucion
+     * Seter para solucionClusterizada
      *
-     * @param solucion
+     * @param solucionClusterizada
      */
-    public void setSolucion(ArrayList<Solucion> solucion) {
-        this.solucion = solucion;
+    public void setSolucionClusterizada(ArrayList<Solucion> 
+            solucionClusterizada) {
+        this.solucionClusterizada = solucionClusterizada;
     }
 
     /**
-     * Retorna solucion
+     * Getter de solucionClusterizada
      *
-     * @return
+     * @return ArrayList<Solucion> solucion clusterizada
      */
-    public ArrayList<Solucion> getSolucion() {
-        return solucion;
+    public ArrayList<Solucion> getSolucionClusterizada() {
+        return solucionClusterizada;
     }
 
 }

@@ -24,7 +24,7 @@ public class LecturaParametros {
      * @return Parametros Objeto que contiene los parametros a utilizar
      */
     @SuppressWarnings("CallToThreadDumpStack")
-    public Parametros leer(String direccionArchivo){
+    public static Parametros leer(String direccionArchivo){
         Parametros parametros = new Parametros();
         try {
             FileInputStream fIStream = new FileInputStream(direccionArchivo);
