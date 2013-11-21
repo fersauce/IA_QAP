@@ -177,17 +177,20 @@ public class Instancia {
                             /*
                             Objetivo 1
                             */
-                            this.flujo1[fila][columna] = Double.valueOf(partes[i]);
+                            this.flujo1[fila][columna] = 
+                                    Double.valueOf(partes[i]);
                         } else if(contadorMatriz == 2){
                             /*
                             Objetivo 2
                             */
-                            this.flujo2[fila][columna] = Double.valueOf(partes[i]);
+                            this.flujo2[fila][columna] = 
+                                    Double.valueOf(partes[i]);
                         } else{
                             /*
                             Distancias
                             */
-                            this.distancias[fila][columna] = Double.valueOf(partes[i]);
+                            this.distancias[fila][columna] = 
+                                    Double.valueOf(partes[i]);
                         }
                         columna++;
                     }
