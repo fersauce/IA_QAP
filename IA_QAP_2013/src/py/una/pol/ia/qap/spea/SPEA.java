@@ -8,7 +8,7 @@ package py.una.pol.ia.qap.spea;
 
 /**
  *
- * @author sauce
+ * @author sauce <carlifer.fernando@gmail.com>
  */
 public class SPEA {
 

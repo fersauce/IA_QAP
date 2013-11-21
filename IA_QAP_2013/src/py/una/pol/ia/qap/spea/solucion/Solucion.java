@@ -7,7 +7,7 @@ package py.una.pol.ia.qap.spea.solucion;
 
 /**
  * Clase que mantiene la solucion de SPEA
- * @author sauce
+ * @author sauce <carlifer.fernando@gmail.com>
  */
 public class Solucion {
 

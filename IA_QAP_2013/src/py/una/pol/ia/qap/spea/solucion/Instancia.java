@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * Clase que instancia los datos de las matrices a utilizar para la resolucion
  * del problema
  *
- * @author sauce
+ * @author sauce <carlifer.fernando@gmail.com>
  */
 public class Instancia {
 

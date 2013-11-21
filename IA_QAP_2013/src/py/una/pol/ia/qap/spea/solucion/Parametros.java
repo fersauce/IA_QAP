@@ -7,7 +7,7 @@ package py.una.pol.ia.qap.spea.solucion;
 
 /**
  * Clase que mantiene los parametros a utilizar en SPEA
- * @author sauce
+ * @author sauce <carlifer.fernando@gmail.com>
  */
 public class Parametros {
 

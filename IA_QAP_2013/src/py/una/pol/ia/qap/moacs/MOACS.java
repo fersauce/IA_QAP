@@ -8,7 +8,7 @@ package py.una.pol.ia.qap.moacs;
 
 /**
  *
- * @author sauce
+ * @author sauce <carlifer.fernando@gmail.com>
  */
 public class MOACS {
 

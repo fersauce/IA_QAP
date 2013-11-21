@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Clase que realiza el clustering en caso que sea necesario
- * @author sauce
+ * @author sauce <carlifer.fernando@gmail.com>
  */
 public class Cluster {
 
