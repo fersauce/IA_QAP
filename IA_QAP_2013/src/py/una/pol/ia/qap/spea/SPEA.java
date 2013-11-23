@@ -225,19 +225,22 @@ public class SPEA {
                     seleccionarIndividuo(problema.getPoblacion(),
                             problema.getConjuntoParetoExterno());
             /*
-            *
+            * Crea la nueva poblacion teniendo como padres a los
+            * individuos de la poblacion.
             */
             ArrayList<Solucion> nuevaGeneracion = OperadoresGeneticos.
                     crossover(poolDeApareamiento);
             /*
-            *
+            * Aqui muta un porcentaje de la poblacion nueva
             */
             ArrayList<Solucion> nuevaPoblacionMutada = OperadoresGeneticos.
                     mutacion(nuevaGeneracion, problema.getParametros().
                             getPorcMutacion(),
                             problema.getParametros().getDimension());
             /*
-            *
+            * Se setea a la poblacion nueva como la poblacion actual 
+            * para la siguiente generacion, y se calcula las 
+            * nuevas 
             */
             problema.setPoblacion(nuevaPoblacionMutada);
             Evaluacion.calcularEvaluaciones(problema.getPoblacion(),
@@ -252,7 +255,7 @@ public class SPEA {
         }
 
         /*
-        *
+        * Se imprime en un archivo el conjunto pareto externo.
         */
         try {
             try (FileWriter fichero = new FileWriter((new File("src/py/una/pol"
