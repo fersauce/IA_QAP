@@ -90,7 +90,7 @@ public class Instancia {
      *
      * @param direccion ruta del archivo de donde provienen los datos
      */
-    @SuppressWarnings("CallToThreadDumpStack")
+    //@SuppressWarnings("CallToThreadDumpStack")
     public void leerDatos(String direccion) {
 
         try {
@@ -103,12 +103,12 @@ public class Instancia {
             BufferedReader bReader = new BufferedReader(
                     new InputStreamReader(dIStream));
             String strLinea;
-
+            
             /*
              Aqui obtenemos la dimension de las matrices de flujos y distancias
              */
             this.tamanho = Integer.valueOf(bReader.readLine());
-
+            
             /*
              Dimensionamos las respectivas matrices
              */

@@ -6,11 +6,20 @@
 package py.una.pol.ia.qap.spea;
 
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import py.una.pol.ia.qap.spea.solucion.Instancia;
 import py.una.pol.ia.qap.spea.solucion.Parametros;
 import py.una.pol.ia.qap.spea.solucion.Solucion;
+import py.una.pol.ia.qap.spea.utilidades.Evaluacion;
+import py.una.pol.ia.qap.spea.utilidades.Generador;
 import py.una.pol.ia.qap.spea.utilidades.LecturaParametros;
+import py.una.pol.ia.qap.spea.utilidades.OperadoresGeneticos;
+import py.una.pol.ia.qap.spea.utilidades.Pareto;
+import py.una.pol.ia.qap.spea.utilidades.ProcesoSeleccion;
+import py.una.pol.ia.qap.spea.utilidades.ReductorPareto;
 
 /**
  * Clase que ejecuta el algoritmo de resolucion de QAP aplicando SPEA
@@ -56,9 +65,13 @@ public class SPEA {
     }
 
     /**
-     * Constructor de la clase SPEA.
+     * Constructor de la clase SPEA. Inicializa todos los atributos de la clase
      */
     public SPEA() {
+        this.poblacion = new ArrayList<>();
+        this.conjuntoParetoExterno = new ArrayList<>();
+        this.instancia = new Instancia();
+        this.parametros = new Parametros();
     }
 
     /**
@@ -93,7 +106,8 @@ public class SPEA {
      *
      * @param conjuntoParetoExterno CPE
      */
-    public void setConjuntoParetoExterno(ArrayList<Solucion> conjuntoParetoExterno) {
+    public void setConjuntoParetoExterno(
+            ArrayList<Solucion> conjuntoParetoExterno) {
         this.conjuntoParetoExterno = conjuntoParetoExterno;
     }
 
@@ -140,14 +154,123 @@ public class SPEA {
         // TODO code application logic here
         Integer generaciones = 0;
         SPEA problema = new SPEA();
+        /*
+        * Obtiene los parametros del archivo de parametros.
+        */
         problema.setParametros(LecturaParametros.
                 leer((new File("src/py/una/pol/ia/qap/spea"
-                + "/archivos/parametros.txt")).
-                getAbsolutePath()));
+                                + "/archivos/parametros.txt")).
+                        getAbsolutePath()));
+        /*
+        * Obtiene las matrices a utilizar en el problema
+        * del archivo proveido.
+        */
         problema.getInstancia().
-                leerDatos((new File("src/py/una/pol/ia/qap/spea"
-                + "/archivos/qapUni.75.p75.1.qap.txt")).
-                getAbsolutePath());
-        
+                leerDatos((new File("src/py/una/pol/ia/qap/spea/archivos"
+                                + "/qapUni.75.p75.1.qap.txt")).
+                        getAbsolutePath());
+        /*
+        * Crea el generador y setea la poblacion inicial 
+        * y calcula las evaluaciones iniciales
+        */
+        Generador generador = new Generador();
+        problema.setPoblacion(generador.generarPoblacionInicial(
+                problema.parametros.getCantidadPoblacion(),
+                problema.parametros.getDimension(),
+                problema.parametros.getNroObjetivos()));
+        Evaluacion.calcularEvaluaciones(problema.getPoblacion(),
+                problema.getInstancia().getDistancias(),
+                problema.getInstancia().getFlujo1(),
+                problema.getInstancia().getFlujo2());
+        /*
+        * Aqui es la parte donde se realiza lo principal del algoritmo
+        * hasta que llegue al criterio de parada.
+        */
+        while (generaciones < problema.parametros.getNroGeneraciones()) {
+            /*
+            * Actualiza el Conjunto Pareto Externo (CPE)
+            */
+            problema.setConjuntoParetoExterno(Pareto.
+                    actualizarConjuntoPareto(problema.getPoblacion(),
+                            problema.getConjuntoParetoExterno()));
+            /*
+            * Aqui ingresa si el tamanho del CPE es mayor al 
+            * tamanho de la poblacion, entonces se realiza una tecnica
+            * de clustering al CPE.
+            */
+            if (problema.getConjuntoParetoExterno().size()
+                    > problema.parametros.getCantidadConjuntoPareto()) {
+                problema.setConjuntoParetoExterno(ReductorPareto.
+                        reducirConjuntoPareto(problema.parametros.
+                                getCantidadConjuntoPareto(),
+                                problema.getConjuntoParetoExterno()));
+            }
+            /*
+            * Calcula el strength correspondiente para cada 
+            * individuo del CPE.
+            */
+            Evaluacion.calcularStrength(problema.getPoblacion(),
+                    problema.getConjuntoParetoExterno());
+            /*
+            * Calcula el fitness para cada individuo de la poblacion
+            * utilizando el strength del CPE.
+            */
+            Evaluacion.calcularFitness(problema.getPoblacion(),
+                    problema.getConjuntoParetoExterno());
+            /*
+            * Aqui realiza la seleccion entre los individuos de la union de la 
+            * poblacion y el CPE utilizando torneo binario.
+            */
+            ArrayList<Solucion> poolDeApareamiento = ProcesoSeleccion.
+                    seleccionarIndividuo(problema.getPoblacion(),
+                            problema.getConjuntoParetoExterno());
+            /*
+            *
+            */
+            ArrayList<Solucion> nuevaGeneracion = OperadoresGeneticos.
+                    crossover(poolDeApareamiento);
+            /*
+            *
+            */
+            ArrayList<Solucion> nuevaPoblacionMutada = OperadoresGeneticos.
+                    mutacion(nuevaGeneracion, problema.getParametros().
+                            getPorcMutacion(),
+                            problema.getParametros().getDimension());
+            /*
+            *
+            */
+            problema.setPoblacion(nuevaPoblacionMutada);
+            Evaluacion.calcularEvaluaciones(problema.getPoblacion(),
+                    problema.getInstancia().getDistancias(),
+                    problema.getInstancia().getFlujo1(),
+                    problema.getInstancia().getFlujo2());
+            /*
+            *
+            */
+            generaciones = generaciones + 1;
+            System.out.println("Generacion: " + generaciones);
+        }
+
+        /*
+        *
+        */
+        try {
+            try (FileWriter fichero = new FileWriter((new File("src/py/una/pol"
+                    + "/ia/qap/spea/archivos"
+                    + "/pareto-qapUni.75.p75.1.qap.txt")).
+                    getAbsolutePath())) {
+                PrintWriter pWriter = new PrintWriter(fichero);
+                for (Solucion solucion : problema.
+                        getConjuntoParetoExterno()) {
+                    pWriter.println(solucion.getEvaluaciones()[0]
+                            + " " + solucion.getEvaluaciones()[1]);
+                    for (Integer cromosoma : solucion.getCromosoma()) {
+                        System.out.print(" | " + cromosoma);
+                    }
+                    System.out.println();
+                }
+            }
+        } catch (IOException e) {
+        }
     }
 }

@@ -48,12 +48,12 @@ public class ProcesoSeleccion {
      * @param conjuntoParetoExterno CPE
      * @return Poblacion Seleccionada (ArrayList de Solucion)
      */
-    public static ArrayList<Solucion> seleccionarInd(
+    public static ArrayList<Solucion> seleccionarIndividuo(
             ArrayList<Solucion> poblacion,
             ArrayList<Solucion> conjuntoParetoExterno) {
         Random rand = new Random();
         ArrayList<Solucion> union = new ArrayList<>();
-        ArrayList<Solucion> matingPool = new ArrayList<>();
+        ArrayList<Solucion> poolDeApareamiento = new ArrayList<>();
         /*
         * union representa la union de la poblacion con el CPE
         */
@@ -72,8 +72,8 @@ public class ProcesoSeleccion {
             Solucion participante2 = union.get(inst);
             union.remove(inst);
             Solucion ganador = torneoBinario(participante1,participante2);
-            matingPool.add(ganador);
+            poolDeApareamiento.add(ganador);
         }
-        return matingPool;
+        return poolDeApareamiento;
     }
 }
