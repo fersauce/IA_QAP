@@ -24,10 +24,10 @@ public class ReductorPareto {
      */
     private static ArrayList<Cluster> crearCluster(ArrayList<Solucion> conjParetoExterno) {
         ArrayList<Cluster> listaCluster = new ArrayList<>();
-        for (Solucion paretoInependiente : conjParetoExterno) {
+        for (Solucion individuoPareto : conjParetoExterno) {
             Cluster cluster = new Cluster();
             ArrayList<Solucion> vectorDeSoluciones = new ArrayList<>();
-            vectorDeSoluciones.add(paretoInependiente);
+            vectorDeSoluciones.add(individuoPareto);
             cluster.setSolucionClusterizada(vectorDeSoluciones);
             listaCluster.add(cluster);
         }
@@ -134,8 +134,8 @@ public class ReductorPareto {
             for (Solucion solucion : listaClusters.get(cluster1).getSolucionClusterizada()){
                 nuevaLista.add(solucion);
             }
-            for (Solucion sol : listaClusters.get(cluster2).getSolucionClusterizada()){
-                nuevaLista.add(sol);
+            for (Solucion solucion : listaClusters.get(cluster2).getSolucionClusterizada()){
+                nuevaLista.add(solucion);
             }
             nuevoCluster.setSolucionClusterizada(nuevaLista);
             listaClusters.add(nuevoCluster);
@@ -145,8 +145,8 @@ public class ReductorPareto {
         }
         ArrayList<Solucion> nuevoConjuntoPareto = new ArrayList<>();
         for(Cluster cluster : listaClusters){
-            Solucion paretoIndependiente = getCentroide(cluster);
-            nuevoConjuntoPareto.add(paretoIndependiente);
+            Solucion individuoPareto = getCentroide(cluster);
+            nuevoConjuntoPareto.add(individuoPareto);
         }
         return nuevoConjuntoPareto;
     }

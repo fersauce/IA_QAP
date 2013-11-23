@@ -12,11 +12,11 @@ package py.una.pol.ia.qap.spea.solucion;
 public class Solucion {
 
     /**
-     * Variable privada que representa el cromosoma
+     * Variable privada que representa el cromosoma.
      */
     private Integer[] cromosoma;
     /**
-     * Variable privada que representa las evaluaciones
+     * Variable privada que representa las evaluaciones.
      */
     private Double[] evaluaciones;
     /**
@@ -65,7 +65,7 @@ public class Solucion {
     /**
      * Retorna el cromosoma
      *
-     * @return
+     * @return cromosoma (Array de Integer)
      */
     public Integer[] getCromosoma() {
         return cromosoma;
@@ -74,7 +74,7 @@ public class Solucion {
     /**
      * Retorna las evaluaciones obtenidas
      *
-     * @return
+     * @return evaluaciones (Array de Double)
      */
     public Double[] getEvaluaciones() {
         return evaluaciones;
@@ -83,7 +83,7 @@ public class Solucion {
     /**
      * Retorna el fitness de esta solucion
      *
-     * @return
+     * @return fitness (Double)
      */
     public Double getFitness() {
         return fitness;

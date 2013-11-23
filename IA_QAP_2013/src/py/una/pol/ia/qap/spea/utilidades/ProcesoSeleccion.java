@@ -57,11 +57,11 @@ public class ProcesoSeleccion {
         /*
         * union representa la union de la poblacion con el CPE
         */
-        for (Solucion poblacionIndependiente:poblacion){
-            union.add(poblacionIndependiente);
+        for (Solucion individuoPoblacion:poblacion){
+            union.add(individuoPoblacion);
         }
-        for(Solucion cpeIndependiente : conjuntoParetoExterno){
-            union.add(cpeIndependiente);
+        for(Solucion individuoCPE : conjuntoParetoExterno){
+            union.add(individuoCPE);
         }
         
         while(!union.isEmpty() && union.size()>2){

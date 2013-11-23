@@ -26,15 +26,15 @@ public class Evaluacion {
             ArrayList<Solucion> conjuntoParetoExterno) {
         Integer contadorCubierto;
         Double strength;
-        for (Solucion paretoIndependiente : conjuntoParetoExterno) {
+        for (Solucion individuoPareto : conjuntoParetoExterno) {
             contadorCubierto = 0;
             for (Solucion pobInd : poblacion) {
-                if (Pareto.uDominaV(paretoIndependiente, pobInd)) {
+                if (Pareto.uDominaV(individuoPareto, pobInd)) {
                     contadorCubierto++;
                 }
             }
             strength = (double) contadorCubierto / (poblacion.size() + 1);
-            paretoIndependiente.setFitness(strength);
+            individuoPareto.setFitness(strength);
         }
     }
 
@@ -47,14 +47,14 @@ public class Evaluacion {
     public static void calcularFitness(ArrayList<Solucion> poblacion,
             ArrayList<Solucion> conjuntoParetoExterno) {
         Double suma;
-        for (Solucion pobInd : poblacion) {
+        for (Solucion individuoPoblacion : poblacion) {
             suma = 0.0;
             for (Solucion paretoInd : conjuntoParetoExterno) {
-                if (Pareto.uDominaV(paretoInd, pobInd)) {
+                if (Pareto.uDominaV(paretoInd, individuoPoblacion)) {
                     suma += paretoInd.getFitness();
                 }
             }
-            pobInd.setFitness(suma + 1.0);
+            individuoPoblacion.setFitness(suma + 1.0);
         }
     }
 
